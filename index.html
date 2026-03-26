@@ -1014,7 +1014,7 @@ async function submitConsult() {
     debtLevel: debtMap[a.debtRatio] || String(a.debtRatio || ''),
     creditScore: a.creditScore === -1 ? '미확인' : String(a.creditScore || ''),
     grade: r.grade || '',
-    track: r.track || ''
+    reqAmount: a.reqAmount ? a.reqAmount.toLocaleString() + '만원' : '미입력'
   };
 
   try {
