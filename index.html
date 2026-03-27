@@ -551,6 +551,10 @@ body { background: var(--bg); color: var(--text); min-height: 100vh; }
       <div class="modal-sub">진단 결과를 바탕으로 담당자가 1영업일 내에 연락드립니다.</div>
       <div class="modal-info-box" id="modalInfoBox"></div>
       <div class="modal-field">
+        <div class="modal-label">업체명 <span>*</span></div>
+        <input class="modal-input" id="mCompany" type="text" placeholder="예) (주)한국중소기업">
+      </div>
+      <div class="modal-field">
         <div class="modal-label">담당자 성함 <span>*</span></div>
         <input class="modal-input" id="mName" type="text" placeholder="홍길동">
       </div>
@@ -571,14 +575,6 @@ body { background: var(--bg); color: var(--text); min-height: 100vh; }
 <script>
 // ── 질문 정의 ──────────────────────────────
 const QUESTIONS = [
-  {
-    id: 'companyName',
-    step: '기업명',
-    text: '기업 이름을 알려주세요',
-    hint: '분석 보고서에 표시됩니다',
-    type: 'text',
-    placeholder: '예) (주)한국중소기업',
-  },
   {
     id: 'industry',
     step: '업종',
@@ -638,19 +634,6 @@ const QUESTIONS = [
     ]
   },
   {
-    id: 'debtRatio',
-    step: '부채 수준',
-    text: '현재 회사의 부채 수준은 어떤가요?',
-    hint: '재무제표가 없다면 대략적인 느낌으로 선택해 주세요',
-    type: 'choice',
-    choices: [
-      { icon: '😊', label: '낮음', sub: '빚보다 자본이 훨씬 많음', value: 'low' },
-      { icon: '😐', label: '보통', sub: '빚과 자본이 비슷한 수준', value: 'mid' },
-      { icon: '😰', label: '높음', sub: '빚이 자본보다 2~3배 많음', value: 'high' },
-      { icon: '😨', label: '매우 높음', sub: '빚이 자본의 4배 이상', value: 'very_high' },
-    ]
-  },
-  {
     id: 'creditScore',
     step: '신용점수',
     text: '대표자 NICE(KCB) 신용점수를 알고 있나요?',
@@ -674,17 +657,6 @@ const QUESTIONS = [
       { icon: '⚠️', label: '세금 체납 있음', sub: '국세 또는 지방세 미납', value: 'tax', danger: true },
       { icon: '⚠️', label: '금융 연체 있음', sub: '최근 3개월 이내', value: 'credit', danger: true },
       { icon: '❌', label: '둘 다 있음', sub: '', value: 'both', danger: true },
-    ]
-  },
-  {
-    id: 'ceoAge',
-    step: '대표자 나이',
-    text: '대표자의 연령대는 어떻게 되나요?',
-    hint: '만 39세 이하는 청년 전용 자금 혜택이 있습니다',
-    type: 'choice',
-    choices: [
-      { icon: '🧑', label: '만 39세 이하', sub: '청년 창업자 우대 혜택 적용', value: 'young' },
-      { icon: '👔', label: '만 40세 이상', sub: '일반 기준 적용', value: 'adult' },
     ]
   },
   {
@@ -824,8 +796,7 @@ async function startAnalysis() {
   const a = answers;
 
   // 부채비율 수치 변환
-  const debtMap = { low: 100, mid: 200, high: 350, very_high: 600 };
-  const debtRatio = debtMap[a.debtRatio] || 200;
+  const debtRatio = 200;
 
   // 업력 수치
   const bizAge = a.bizAge || 5;
@@ -844,15 +815,12 @@ async function startAnalysis() {
 {"grade":"A|B|C","gradeReason":"1~2문장 (트랙 언급 없이)","selfPct":숫자,"expertPct":숫자,"improvements":[{"item":"보완항목","detail":"보완하면 어떻게 좋아지는지","level":"high|mid|low"}],"bonus":[{"item":"강점항목","effect":"효과설명"}],"summary":"150자 내외. 중진공/소진공 언급 없이. 혼자 가능성과 전문가 도움 가능성을 자연스럽게 녹여서 친근하게 작성."}`;
 
   const userMsg = `고객정보:
-기업명: ${a.companyName}
 업종: ${a.industry}
 상시근로자: ${a.workers}명
 업력: ${bizAge}년
 연매출: ${a.annualRev}만원
-부채비율: 약 ${debtRatio}%
 대표자신용점수: ${a.creditScore === -1 ? '미확인' : a.creditScore + '점'}
 세금·연체 이슈: ${a.taxOk}
-대표자연령: ${a.ceoAge === 'young' ? '만39세이하(청년)' : '만40세이상'}
 신청희망금액: ${a.reqAmount}만원
 
 이 정보로 정책자금 적격성을 분석해 주세요.`;
@@ -900,8 +868,8 @@ function fallback(a, debtRatio, bizAge) {
       ...(debtRatio > 300 ? [{ item: '부채비율 개선', detail: '자본 확충 또는 부채 감소 시 심사 통과율 상승', level: 'mid' }] : []),
       { item: '재무제표 준비', detail: '최근 3년 재무제표를 갖추면 심사 신뢰도가 높아집니다', level: 'low' }
     ],
-    bonus: a.ceoAge === 'young' ? [{ item: '청년 대표자', effect: '청년 전용 우대 혜택 적용 가능' }] : [],
-    summary: `${a.companyName}의 현재 상황을 분석한 결과, 혼자 진행하실 경우 약 ${selfPct}% 수준의 가능성이 예상됩니다. 전문가의 도움을 받으시면 ${expertPct}%까지 높일 수 있어요. 몇 가지 보완 포인트만 챙기시면 충분히 도전해볼 수 있습니다!`
+    bonus: [],
+    summary: `현재 상황을 분석한 결과, 혼자 진행하실 경우 약 ${selfPct}% 수준의 가능성이 예상됩니다. 전문가의 도움을 받으시면 ${expertPct}%까지 높일 수 있어요. 몇 가지 보완 포인트만 챙기시면 충분히 도전해볼 수 있습니다!`
   };
 }
 
@@ -922,7 +890,7 @@ function renderReport(r, a, debtRatio, bizAge) {
           <div class="gc-text">${gradeLabel[r.grade] || ''}</div>
         </div>
         <div class="grade-info">
-          <h2>${a.companyName}</h2>
+          <h2>${a.industry} 사업체</h2>
           <div class="grade-reason">${r.gradeReason}</div>
         </div>
       </div>
@@ -1024,24 +992,20 @@ function renderReport(r, a, debtRatio, bizAge) {
 
 
 // ── 구글 시트 연동 ──────────────────────────────
-const GS_URL = 'https://script.google.com/macros/s/AKfycbw1i3vLR7fGS1Sh6WyYUeR4h_0oMxt2ImFvWSd1dCZZjbHKFxJhbEnqkU9zF8nkZq2s/exec';
+const GS_URL = 'https://script.google.com/macros/s/AKfycbyvCQobRhoEDbSA_h8pQV7QTkiwFc0q0MvM7Lb-QzyFv5-jxSBml37ILOvc0gXQA7oc/exec';
 let _reportData = {};
 let _answerData = {};
 
 // ── 진단로그 자동 저장 ──────────────────────────────
 function saveDiagLog(r, a, bizAge) {
-  const debtMap  = { low: '낮음', mid: '보통', high: '높음', very_high: '매우 높음' };
   const bizAgeMap = { 0.5: '1년 미만', 2: '1~3년', 5: '3~7년', 10: '7년 이상' };
   const params = new URLSearchParams({
-    companyName: a.companyName || '',
     industry:    a.industry    || '',
     workers:     String(a.workers || ''),
     bizAge:      bizAgeMap[a.bizAge] || String(a.bizAge || ''),
     annualRev:   a.annualRev ? (a.annualRev >= 100000 ? (a.annualRev/100000).toFixed(0)+'억원대' : (a.annualRev/10000).toFixed(0)+'천만원대') : '',
-    debtLevel:   debtMap[a.debtRatio] || String(a.debtRatio || ''),
     creditScore: a.creditScore === -1 ? '미확인' : String(a.creditScore || ''),
     taxOk:       a.taxOk       || '',
-    ceoAge:      a.ceoAge === 'young' ? '만39세이하' : '만40세이상',
     reqAmount:   a.reqAmount   ? a.reqAmount.toLocaleString() + '만원' : '',
     grade:       r.grade       || ''
   });
@@ -1053,8 +1017,8 @@ function openModal() {
   const a = _answerData;
   const r = _reportData;
   const box = document.getElementById('modalInfoBox');
-  if (box && a.companyName) {
-    box.innerHTML = '<strong>' + a.companyName + '</strong> 진단 결과 · 등급 <strong>' + (r.grade||'-') + '</strong> · ' + (r.track||'-') + ' 트랙<br>이 내용이 함께 전달됩니다.';
+  if (box && r.grade) {
+    box.innerHTML = '진단 등급 <strong>' + (r.grade||'-') + '</strong> 결과가 함께 전달됩니다.';
   }
   document.getElementById('modalOverlay').classList.add('active');
   document.body.style.overflow = 'hidden';
@@ -1071,11 +1035,13 @@ function closeModalOutside(e) {
 }
 
 async function submitConsult() {
-  const name  = document.getElementById('mName').value.trim();
-  const phone = document.getElementById('mPhone').value.trim();
-  const msg   = document.getElementById('mMsg').value.trim();
-  if (!name)  { document.getElementById('mName').focus();  return; }
-  if (!phone) { document.getElementById('mPhone').focus(); return; }
+  const company = document.getElementById('mCompany').value.trim();
+  const name    = document.getElementById('mName').value.trim();
+  const phone   = document.getElementById('mPhone').value.trim();
+  const msg     = document.getElementById('mMsg').value.trim();
+  if (!company) { document.getElementById('mCompany').focus(); return; }
+  if (!name)    { document.getElementById('mName').focus();    return; }
+  if (!phone)   { document.getElementById('mPhone').focus();   return; }
 
   const btn = document.getElementById('modalSubmitBtn');
   btn.disabled = true;
@@ -1083,11 +1049,10 @@ async function submitConsult() {
 
   const a = _answerData;
   const r = _reportData;
-  const debtMap = { low: '낮음', mid: '보통', high: '높음', very_high: '매우 높음' };
   const bizAgeMap = { 0.5: '1년 미만', 2: '1~3년', 5: '3~7년', 10: '7년 이상' };
 
   const payload = {
-    companyName: a.companyName || '',
+    companyName: company,
     contactName: name,
     phone: phone,
     message: msg,
@@ -1095,7 +1060,6 @@ async function submitConsult() {
     workers: String(a.workers || ''),
     bizAge: bizAgeMap[a.bizAge] || String(a.bizAge || ''),
     annualRev: a.annualRev ? (a.annualRev >= 100000 ? (a.annualRev/100000).toFixed(0)+'억원대' : (a.annualRev/10000).toFixed(0)+'천만원대') : '',
-    debtLevel: debtMap[a.debtRatio] || String(a.debtRatio || ''),
     creditScore: a.creditScore === -1 ? '미확인' : String(a.creditScore || ''),
     grade: r.grade || '',
     reqAmount: a.reqAmount ? a.reqAmount.toLocaleString() + '만원' : '미입력'
