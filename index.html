@@ -310,101 +310,59 @@ body { background: var(--bg); color: var(--text); min-height: 100vh; }
 
 /* ── 상담 신청 섹션 ── */
 .consult-section {
-  padding: 0;
-  border-bottom: none;
+  padding: 24px;
+  border-bottom: 1px solid var(--border);
 }
 .consult-box {
-  background: linear-gradient(145deg, #0f172a 0%, #1e3a8a 50%, #1d4ed8 100%);
-  border-radius: 0;
-  padding: 36px 24px 32px;
+  background: linear-gradient(135deg, #1e40af, #2563eb);
+  border-radius: 14px;
+  padding: 24px 22px 20px;
   color: #fff;
   position: relative;
   overflow: hidden;
 }
-/* 빛나는 배경 원 */
 .consult-box::before {
   content: '';
   position: absolute;
-  top: -60px; right: -60px;
-  width: 220px; height: 220px;
-  background: radial-gradient(circle, rgba(99,179,237,0.2) 0%, transparent 70%);
+  top: -30px; right: -30px;
+  width: 120px; height: 120px;
+  background: rgba(255,255,255,0.05);
   border-radius: 50%;
-  animation: floatOrb 4s ease-in-out infinite;
 }
 .consult-box::after {
   content: '';
   position: absolute;
-  bottom: -40px; left: -40px;
-  width: 180px; height: 180px;
-  background: radial-gradient(circle, rgba(167,139,250,0.15) 0%, transparent 70%);
+  bottom: -20px; right: 40px;
+  width: 80px; height: 80px;
+  background: rgba(255,255,255,0.04);
   border-radius: 50%;
-  animation: floatOrb 4s ease-in-out infinite reverse;
-}
-@keyframes floatOrb {
-  0%,100% { transform: translateY(0) scale(1); }
-  50%      { transform: translateY(-12px) scale(1.08); }
-}
-/* 별빛 파티클 */
-.consult-stars {
-  position: absolute; inset: 0; pointer-events: none; overflow: hidden;
-}
-.star {
-  position: absolute;
-  width: 3px; height: 3px;
-  background: #fff;
-  border-radius: 50%;
-  animation: twinkle var(--d, 2s) ease-in-out infinite var(--delay, 0s);
-  opacity: 0;
-}
-@keyframes twinkle {
-  0%,100% { opacity: 0; transform: scale(0.5); }
-  50%      { opacity: 0.8; transform: scale(1.2); }
 }
 .consult-eyebrow {
-  font-size: 11px; font-weight: 700;
-  letter-spacing: 2px; text-transform: uppercase;
-  color: #93c5fd;
-  margin-bottom: 12px;
-  position: relative; z-index: 1;
-  display: flex; align-items: center; gap: 6px;
-}
-.eyebrow-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: #60a5fa;
-  animation: dotPulse 1.5s ease-in-out infinite;
-}
-@keyframes dotPulse {
-  0%,100% { opacity: 1; transform: scale(1); }
-  50%      { opacity: 0.4; transform: scale(0.7); }
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 8px;
 }
 .consult-heading {
-  font-size: 22px; font-weight: 800;
-  line-height: 1.3; margin-bottom: 10px;
-  position: relative; z-index: 1;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  font-size: 18px; font-weight: 700;
+  line-height: 1.35; margin-bottom: 10px;
 }
 .consult-desc {
-  font-size: 13px; color: rgba(255,255,255,0.7);
-  line-height: 1.65; margin-bottom: 20px;
-  position: relative; z-index: 1;
+  font-size: 13px; color: rgba(255,255,255,0.75);
+  line-height: 1.6; margin-bottom: 20px;
 }
 .consult-points {
-  display: flex; flex-direction: column; gap: 9px;
-  margin-bottom: 26px;
-  position: relative; z-index: 1;
+  display: flex; flex-direction: column; gap: 7px;
+  margin-bottom: 22px;
 }
 .consult-point {
-  display: flex; align-items: center; gap: 10px;
-  font-size: 13px; color: rgba(255,255,255,0.92);
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: rgba(255,255,255,0.9);
 }
 .cp-dot {
-  width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
-  background: rgba(96,165,250,0.25);
-  border: 1px solid rgba(96,165,250,0.5);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 9px; color: #93c5fd;
+  width: 5px; height: 5px; border-radius: 50%;
+  background: rgba(255,255,255,0.5); flex-shrink: 0;
 }
-/* 버튼 래퍼 - 외부 glow 링 */
 .consult-btn-wrap {
   position: relative; z-index: 1;
   border-radius: 16px;
@@ -439,7 +397,6 @@ body { background: var(--bg); color: var(--text); min-height: 100vh; }
   0%,100% { transform: scale(1); }
   50%      { transform: scale(1.025); }
 }
-/* 광택 슬라이드 */
 .consult-btn::before {
   content: '';
   position: absolute;
@@ -452,7 +409,6 @@ body { background: var(--bg); color: var(--text); min-height: 100vh; }
   0%       { left: -100%; }
   50%,100% { left: 150%; }
 }
-/* 버튼 내부 텍스트 화살표 bounce */
 .consult-btn::after {
   content: '';
   position: absolute;
@@ -472,8 +428,8 @@ body { background: var(--bg); color: var(--text); min-height: 100vh; }
 }
 .consult-note {
   text-align: center;
-  font-size: 11px; color: rgba(255,255,255,0.4);
-  margin-top: 12px; position: relative; z-index: 1;
+  font-size: 11px; color: rgba(255,255,255,0.45);
+  margin-top: 10px; position: relative; z-index: 1;
 }
 
 /* ── 팝업 오버레이 ── */
@@ -875,19 +831,17 @@ async function startAnalysis() {
   const bizAge = a.bizAge || 5;
 
   const systemPrompt = `당신은 중소기업 정책자금 전문 컨설턴트입니다.
-아래 정책자금 핵심 기준으로 간단한 고객 정보를 분석해 적격성 보고서를 작성합니다.
+고객 정보를 분석해 정책자금 가능성 보고서를 작성합니다.
 
-[핵심 판단 기준 요약]
-- 즉시탈락: 세금체납, 신용정보원악성등재, 부당이력, 5년100억초과, 운전자금25억초과
-- 소상공인(제조업10인미만/기타5인미만) → 소진공트랙
-- 중소기업 → 중진공트랙
-- 등급: A(적극추천), B(추천), C(조건부), D(보류), F(신청불가)
-- 중진공자금: 업력7년미만→혁신창업사업화/청년전용, 수출→신시장진출, 성장→신성장기반/혁신성장지원, 위기→재도약
-- 소진공자금: 일반경영안정(대리대출7천만), 신용취약(NCB839이하3천만), 대환대출(7%이상고금리), 혁신성장촉진(10억), 일시적경영애로(매출15%감소7천만)
-- 신용점수: 840이상=우량, 744~839=보통(소진공기본), 743이하=신용취약소상공인자금
+[판단 기준]
+- 등급은 A(좋음), B(보통), C(도전) 3단계만 사용합니다. F등급은 없습니다. 세금체납·연체가 있어도 C등급으로 처리합니다.
+- 혼자 신청할 때 성공 가능성(%): 재무상태·신용·업력·세금이슈 등을 종합해 현실적으로 산출. 반드시 5의 배수가 아닌 구체적인 수치로 (예: 37, 52, 68 등)
+- 전문가와 함께할 때 성공 가능성(%): 전문가의 서류보완·전략수립 도움을 고려해 산출. 항상 혼자보다 15~30%p 높게. 역시 구체적인 수치로 (예: 61, 74, 83 등)
+- summary는 중진공/소진공 트랙 언급 없이, 고객 상황을 친근하게 요약. 가능성에 대한 희망적 메시지 포함.
+- improvements는 "보완하면 가능성이 올라가는 항목"으로 작성. 부정적 표현 지양.
 
 반드시 아래 JSON만 출력하세요 (다른 텍스트 없음):
-{"grade":"A|B|C|D|F","gradeReason":"1~2문장","track":"중진공|소진공|중진공+소진공","disqualifyIssues":[{"pass":true,"item":"항목","detail":"내용"}],"funds":[{"name":"자금명","limit":"한도","rate":"금리","top":true,"reason":"이유"}],"bonus":[{"item":"가점","effect":"효과"}],"risks":[{"item":"리스크","level":"high|mid|low","fix":"개선방안"}],"summary":"150자 내외 친절한 종합의견","actions":["준비사항1","준비사항2","준비사항3"]}`;
+{"grade":"A|B|C","gradeReason":"1~2문장 (트랙 언급 없이)","selfPct":숫자,"expertPct":숫자,"improvements":[{"item":"보완항목","detail":"보완하면 어떻게 좋아지는지","level":"high|mid|low"}],"bonus":[{"item":"강점항목","effect":"효과설명"}],"summary":"150자 내외. 중진공/소진공 언급 없이. 혼자 가능성과 전문가 도움 가능성을 자연스럽게 녹여서 친근하게 작성."}`;
 
   const userMsg = `고객정보:
 기업명: ${a.companyName}
@@ -929,23 +883,24 @@ async function startAnalysis() {
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 function fallback(a, debtRatio, bizAge) {
-  const isSoho = (a.industry === '숙박음식점' || a.industry === '기타서비스') && a.workers < 5;
   const taxIssue = a.taxOk !== 'none';
-  const grade = taxIssue ? 'F' : debtRatio < 300 ? 'A' : debtRatio < 500 ? 'B' : 'C';
+  const grade = debtRatio < 200 ? 'A' : debtRatio < 400 ? 'B' : 'C';
+  const selfPct = taxIssue
+    ? (debtRatio < 200 ? 31 : debtRatio < 400 ? 24 : 17)
+    : (debtRatio < 200 ? (bizAge > 7 ? 73 : 68) : debtRatio < 400 ? (bizAge > 7 ? 57 : 51) : (bizAge > 7 ? 39 : 33));
+  const expertPct = Math.min(94, selfPct + (taxIssue ? 28 : debtRatio < 200 ? 19 : debtRatio < 400 ? 23 : 27));
   return {
-    grade, gradeReason: taxIssue ? '세금 또는 연체 이슈로 즉시 탈락 가능성이 있습니다' : '기본 요건을 충족하고 있습니다',
-    track: isSoho ? '소진공' : '중진공',
-    disqualifyIssues: [
-      { pass: a.taxOk === 'none', item: '세금 체납 여부', detail: a.taxOk === 'none' ? '정상' : '체납 이슈 확인 필요' },
-      { pass: true, item: '기업 운영 상태', detail: '정상 운영 중' },
+    grade,
+    gradeReason: taxIssue ? '세금·연체 이슈가 있지만 보완을 통해 도전 가능합니다' : '기본 요건을 갖추고 있어 신청이 가능합니다',
+    selfPct,
+    expertPct,
+    improvements: [
+      ...(taxIssue ? [{ item: '세금·연체 정리', detail: '체납 해소 시 가능성이 크게 올라갑니다', level: 'high' }] : []),
+      ...(debtRatio > 300 ? [{ item: '부채비율 개선', detail: '자본 확충 또는 부채 감소 시 심사 통과율 상승', level: 'mid' }] : []),
+      { item: '재무제표 준비', detail: '최근 3년 재무제표를 갖추면 심사 신뢰도가 높아집니다', level: 'low' }
     ],
-    funds: isSoho
-      ? [{ name: '일반경영안정자금', limit: '7천만원', rate: '기준금리+0.6%p', top: true, reason: '소상공인 기본 운전자금' }]
-      : [{ name: bizAge < 7 ? '혁신창업사업화자금' : '신성장기반자금', limit: '1~5억원', rate: '2.0%~', top: true, reason: bizAge < 7 ? '창업기업 우선 지원' : '성장기업 지원' }],
-    bonus: a.ceoAge === 'young' ? [{ item: '청년 대표자', effect: '청년전용자금 우대 적용 가능' }] : [],
-    risks: debtRatio > 400 ? [{ item: '부채비율 높음', level: 'high', fix: '재무구조 개선 후 재신청 검토' }] : [],
-    summary: `${a.companyName}은(는) 기본 요건을 검토한 결과 ${isSoho ? '소진공' : '중진공'} 트랙 신청이 적합합니다. 정확한 분석을 위해 재무제표를 지참하여 전문가 상담을 권장합니다.`,
-    actions: ['사업자등록증 준비', '최근 3년 재무제표 준비', '납세증명서 발급 (홈택스)']
+    bonus: a.ceoAge === 'young' ? [{ item: '청년 대표자', effect: '청년 전용 우대 혜택 적용 가능' }] : [],
+    summary: `${a.companyName}의 현재 상황을 분석한 결과, 혼자 진행하실 경우 약 ${selfPct}% 수준의 가능성이 예상됩니다. 전문가의 도움을 받으시면 ${expertPct}%까지 높일 수 있어요. 몇 가지 보완 포인트만 챙기시면 충분히 도전해볼 수 있습니다!`
   };
 }
 
@@ -953,12 +908,15 @@ function fallback(a, debtRatio, bizAge) {
 function renderReport(r, a, debtRatio, bizAge) {
   _reportData = r;
   _answerData = a;
-  const gradeLabel = { A: '적극 추천', B: '추천', C: '조건부', D: '보류', F: '신청 불가' };
+  const gradeLabel = { A: '가능성 높음', B: '도전 가능', C: '보완 후 도전' };
+  const gradeColor = { A: 'grade-A', B: 'grade-B', C: 'grade-C' };
+  const selfPct  = r.selfPct  || 50;
+  const expertPct = r.expertPct || 75;
   const rc = document.getElementById('reportCard');
   rc.innerHTML = `
     <div class="grade-hero">
       <div class="grade-row">
-        <div class="grade-circle grade-${r.grade}">
+        <div class="grade-circle ${gradeColor[r.grade] || 'grade-B'}">
           <div class="gc-letter">${r.grade}</div>
           <div class="gc-text">${gradeLabel[r.grade] || ''}</div>
         </div>
@@ -968,7 +926,6 @@ function renderReport(r, a, debtRatio, bizAge) {
         </div>
       </div>
       <div class="chip-row">
-        <span class="chip">📍 ${r.track} 트랙</span>
         <span class="chip">🏭 ${a.industry}</span>
         <span class="chip">⏱ 업력 ${bizAge}년</span>
         <span class="chip">👥 ${a.workers}명</span>
@@ -981,26 +938,52 @@ function renderReport(r, a, debtRatio, bizAge) {
     </div>
 
     <div class="report-section">
-      <div class="sec-title">즉시 탈락 여부 점검</div>
+      <div class="sec-title">정책자금 승인 가능성</div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <span style="font-size:13px;color:var(--text2);font-weight:500;">🙋 혼자 진행할 때</span>
+            <span style="font-size:18px;font-weight:800;color:var(--text);">${selfPct}%</span>
+          </div>
+          <div style="height:10px;background:var(--border);border-radius:99px;overflow:hidden;">
+            <div style="height:100%;width:${selfPct}%;background:linear-gradient(90deg,#93c5fd,#3b82f6);border-radius:99px;transition:width 1s ease;"></div>
+          </div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <span style="font-size:13px;color:var(--primary);font-weight:600;">💼 전문가와 함께할 때</span>
+            <span style="font-size:18px;font-weight:800;color:var(--primary);">${expertPct}%</span>
+          </div>
+          <div style="height:10px;background:var(--border);border-radius:99px;overflow:hidden;">
+            <div style="height:100%;width:${expertPct}%;background:linear-gradient(90deg,#60a5fa,#1d4ed8);border-radius:99px;transition:width 1s ease;"></div>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-top:5px;text-align:right;">전문가 도움 시 +${expertPct - selfPct}%p 향상</div>
+        </div>
+      </div>
+    </div>
+
+    ${r.improvements && r.improvements.length > 0 ? `
+    <div class="report-section">
+      <div class="sec-title">보완하면 가능성이 올라가요</div>
       <div class="check-list">
-        ${(r.disqualifyIssues || []).map(d => `
-          <div class="ci ${d.pass ? 'ok' : 'fail'}">
-            <div class="ci-icon">${d.pass ? '✅' : '❌'}</div>
+        ${r.improvements.map(im => `
+          <div class="ci ${im.level === 'high' ? 'warn' : im.level === 'mid' ? 'info' : 'ok'}">
+            <div class="ci-icon">${im.level === 'high' ? '⚡' : im.level === 'mid' ? '📌' : '✨'}</div>
             <div>
-              <div class="ci-main">${d.item}</div>
-              <div class="ci-sub">${d.detail}</div>
+              <div class="ci-main">${im.item}</div>
+              <div class="ci-sub">${im.detail}</div>
             </div>
           </div>
         `).join('')}
       </div>
-    </div>
+    </div>` : ''}
 
     ${r.bonus && r.bonus.length > 0 ? `
     <div class="report-section">
-      <div class="sec-title">가점 항목</div>
+      <div class="sec-title">현재 강점</div>
       <div class="check-list">
         ${r.bonus.map(b => `
-          <div class="ci info">
+          <div class="ci ok">
             <div class="ci-icon">⭐</div>
             <div>
               <div class="ci-main">${b.item}</div>
@@ -1011,40 +994,15 @@ function renderReport(r, a, debtRatio, bizAge) {
       </div>
     </div>` : ''}
 
-    ${r.risks && r.risks.length > 0 ? `
-    <div class="report-section">
-      <div class="sec-title">주의 사항</div>
-      <div class="check-list">
-        ${r.risks.map(rk => `
-          <div class="ci ${rk.level === 'high' ? 'fail' : rk.level === 'mid' ? 'warn' : 'info'}">
-            <div class="ci-icon">${rk.level === 'high' ? '🔴' : rk.level === 'mid' ? '🟡' : '🔵'}</div>
-            <div>
-              <div class="ci-main">${rk.item}</div>
-              <div class="ci-sub">${rk.fix}</div>
-            </div>
-          </div>
-        `).join('')}
-      </div>
-    </div>` : ''}
-
     <div class="consult-section">
       <div class="consult-box">
-        <div class="consult-stars">
-          <div class="star" style="top:15%;left:10%;--d:2.1s;--delay:0s"></div>
-          <div class="star" style="top:25%;left:85%;--d:1.8s;--delay:0.4s"></div>
-          <div class="star" style="top:60%;left:20%;--d:2.4s;--delay:0.8s"></div>
-          <div class="star" style="top:70%;left:75%;--d:1.6s;--delay:0.2s"></div>
-          <div class="star" style="top:40%;left:50%;--d:2.2s;--delay:1.0s"></div>
-          <div class="star" style="top:80%;left:40%;--d:1.9s;--delay:0.6s"></div>
-          <div class="star" style="top:10%;left:60%;--d:2.0s;--delay:1.2s"></div>
-        </div>
-        <div class="consult-eyebrow"><div class="eyebrow-dot"></div>무료 전문가 상담</div>
+        <div class="consult-eyebrow">무료 전문가 상담</div>
         <div class="consult-heading">어떤 자금이 맞는지,<br>직접 확인해 드릴게요</div>
         <div class="consult-desc">사전진단 결과를 바탕으로 실제 신청 가능한 자금과 준비 서류를 전문가가 1:1로 안내해 드립니다.</div>
         <div class="consult-points">
-          <div class="consult-point"><div class="cp-dot">✓</div>중진공·소진공 신청 가능 여부 정밀 확인</div>
-          <div class="consult-point"><div class="cp-dot">✓</div>업종·업력·재무 상태에 맞는 자금 직접 매칭</div>
-          <div class="consult-point"><div class="cp-dot">✓</div>서류 준비부터 접수까지 단계별 안내</div>
+          <div class="consult-point"><div class="cp-dot"></div>중진공·소진공 신청 가능 여부 정밀 확인</div>
+          <div class="consult-point"><div class="cp-dot"></div>업종·업력·재무 상태에 맞는 자금 직접 매칭</div>
+          <div class="consult-point"><div class="cp-dot"></div>서류 준비부터 접수까지 단계별 안내</div>
         </div>
         <div class="consult-btn-wrap">
           <button class="consult-btn" onclick="openModal()">
