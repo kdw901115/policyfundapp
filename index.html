@@ -878,6 +878,7 @@ async function startAnalysis() {
 
   lc.classList.remove('active');
   renderReport(result, a, debtRatio, bizAge);
+  saveDiagLog(result, a, bizAge);
 }
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
@@ -1026,6 +1027,27 @@ function renderReport(r, a, debtRatio, bizAge) {
 const GS_URL = 'https://script.google.com/macros/s/AKfycbw1i3vLR7fGS1Sh6WyYUeR4h_0oMxt2ImFvWSd1dCZZjbHKFxJhbEnqkU9zF8nkZq2s/exec';
 let _reportData = {};
 let _answerData = {};
+
+// ── 진단로그 자동 저장 ──────────────────────────────
+function saveDiagLog(r, a, bizAge) {
+  const debtMap  = { low: '낮음', mid: '보통', high: '높음', very_high: '매우 높음' };
+  const bizAgeMap = { 0.5: '1년 미만', 2: '1~3년', 5: '3~7년', 10: '7년 이상' };
+  const params = new URLSearchParams({
+    companyName: a.companyName || '',
+    industry:    a.industry    || '',
+    workers:     String(a.workers || ''),
+    bizAge:      bizAgeMap[a.bizAge] || String(a.bizAge || ''),
+    annualRev:   a.annualRev ? (a.annualRev >= 100000 ? (a.annualRev/100000).toFixed(0)+'억원대' : (a.annualRev/10000).toFixed(0)+'천만원대') : '',
+    debtLevel:   debtMap[a.debtRatio] || String(a.debtRatio || ''),
+    creditScore: a.creditScore === -1 ? '미확인' : String(a.creditScore || ''),
+    taxOk:       a.taxOk       || '',
+    ceoAge:      a.ceoAge === 'young' ? '만39세이하' : '만40세이상',
+    reqAmount:   a.reqAmount   ? a.reqAmount.toLocaleString() + '만원' : '',
+    grade:       r.grade       || ''
+  });
+  // GET 방식으로 조용히 전송 (실패해도 사용자에게 영향 없음)
+  fetch(GS_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' }).catch(() => {});
+}
 
 function openModal() {
   const a = _answerData;
